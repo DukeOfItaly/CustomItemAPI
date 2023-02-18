@@ -10,48 +10,10 @@ import java.sql.SQLException;
 
 public class MySQL {
 
-    Main plugin = Main.getInstance();
+    CustomItemAPI plugin = CustomItemAPI.getInstance();
     DataSource dataSource = plugin.getDataSource();
-
-
-    public void setValues() {
-        plugin.getConfig().set("host", "localhost");
-        plugin.getConfig().set("port", 80);
-        plugin.getConfig().set("username", "root");
-        plugin.getConfig().set("password", "root");
-        plugin.getConfig().set("database", "test");
-        plugin.saveConfig();
-    }
-
-    String host = plugin.getConfig().getString("host");
-    int port = plugin.getConfig().getInt("port");
-    String password = plugin.getConfig().getString("password");
-    String username = plugin.getConfig().getString("username");
-    String database = plugin.getConfig().getString("database");
-
-
-    public DataSource initMySQLDataSource() throws SQLException{
-        MysqlDataSource dataSource = new MysqlConnectionPoolDataSource();
-        dataSource.setServerName(host);
-        dataSource.setPortNumber(port);
-        dataSource.setDatabaseName(database);
-        dataSource.setUser(username);
-        dataSource.setPassword(password);
-        testConnection(dataSource);
-        return dataSource;
-    }
-
-
-    private void testConnection(DataSource dataSource) throws SQLException {
-        try(Connection conn = dataSource.getConnection()) {
-            if(!conn.isValid(1)) {
-                throw new SQLException(" Could not establish database connection.");
-            }
-        }
-    }
-
     public void createSword(String itemID, String itemName, int itemRank, String itemClass, String lore, int maxLevel, int rarity, int attack, int magicAttack, int defense, int magicDefense, int requiredBaseStrength, int requiredBaseDexterity, int requiredBaseIntelligence, int requiredBaseWisdom, int strength, int dexterity, int intelligence, int wisdom, int accuracy, int criticalRate, int addedHealth, int addedMana, float dropRate, boolean tradable, int attackSpeed, String weaponType) throws SQLException {
-        String sql = "INSERT INTO items VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO items VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(sql);
         preparedStatement.setString(1, itemID);
         preparedStatement.setString(2, itemName);
